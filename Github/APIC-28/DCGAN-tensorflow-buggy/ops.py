@@ -6,12 +6,6 @@ from tensorflow.python.framework import ops
 
 from utils import *
 
-image_summary = tf.image_summary
-scalar_summary = tf.scalar_summary
-histogram_summary = tf.histogram_summary
-merge_summary = tf.merge_summary
-SummaryWriter = tf.train.SummaryWriter
-
 if "concat_v2" in dir(tf):
   def concat(tensors, axis, *args, **kwargs):
     return tf.concat_v2(tensors, axis, *args, **kwargs)

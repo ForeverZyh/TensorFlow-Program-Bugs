@@ -19,9 +19,6 @@ except:
   merge_summary = tf.summary.merge
   SummaryWriter = tf.summary.FileWriter
 
-def concat(tensors, axis, *args, **kwargs):
-  return tf.concat_v2(tensors, axis, *args, **kwargs)
-
 class batch_norm(object):
   def __init__(self, epsilon=1e-5, momentum = 0.9, name="batch_norm"):
     with tf.variable_scope(name):
