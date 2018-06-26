@@ -1,6 +1,10 @@
 import numpy as np
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+
 with tf.Session() as sess:
     init = tf.global_variables_initializer()
     sess.run(init)
@@ -18,3 +22,4 @@ with tf.Session() as sess:
     a = tf.nn.relu(z)
 
     yhat = sess.run(a, feed_dict={x: np.random.random([100000, in_size])})
+    print(yhat)

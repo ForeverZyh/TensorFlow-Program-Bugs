@@ -2,6 +2,11 @@ import tensorflow as tf
 import numpy as np
 import random
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+random.seed(20180130)
+
 niter = 1000
 
 nclasses = 15

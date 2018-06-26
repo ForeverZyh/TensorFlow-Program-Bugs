@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 # Model parameters
 A = tf.Variable([0], dtype=tf.float32)
 B = tf.Variable([0], dtype=tf.float32)

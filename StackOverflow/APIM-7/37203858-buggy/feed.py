@@ -1,6 +1,10 @@
 import tensorflow as tf
 import numpy as np
 
+assert tf.__version__ == "1.8.0"
+np.random.seed(20180130)
+tf.set_random_seed(20180130)
+
 n_data = 1000
 features = np.random.uniform(0, 1, [n_data, 10])
 labels = np.random.uniform(0, 1, [n_data, 4])
@@ -22,7 +26,7 @@ with tf.Session() as sess:
     W = tf.Variable(tf.truncated_normal([10, 4]))
     B = tf.Variable(tf.truncated_normal([4]))
     logits = tf.matmul(train_data_node, W) + B
-    loss_value = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=train_labels_node)
+    loss_value = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=train_labels_node))
     optimizer = tf.train.AdamOptimizer().minimize(loss_value)
 
     tf.initialize_all_variables().run()
@@ -34,3 +38,4 @@ with tf.Session() as sess:
         feed_dict = {train_data_node: data,
                      train_labels_node: label}
         _, l = sess.run([optimizer, loss_value], feed_dict=feed_dict)
+        print("loss: ", l)

@@ -1,6 +1,9 @@
 import tensorflow as tf
 from tqdm import tqdm
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 TRAIN_DATA_PATH = './heart_train.csv'
 TEST_DATA_PATH = './heart_test.csv'
 BATCH_SIZE = 7

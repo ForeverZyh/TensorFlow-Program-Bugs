@@ -2,6 +2,11 @@ import tensorflow as tf
 import random
 import numpy as np
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+random.seed(20180130)
+
 X = tf.placeholder(tf.float32, shape=[None, 14], name='X')
 Y = tf.placeholder(tf.float32, shape=[None, 1], name='Y')
 
@@ -37,14 +42,13 @@ learner = tf.train.AdamOptimizer(learning_rate).minimize(loss)
 correct_prediction = tf.equal(tf.greater(Y, 0.5), tf.greater(Ypred, 0.5))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-xx = np.random.normal(0, 3, 14)
-
 unit_train_inputX = []
 unit_train_inputY = []
 for i in range(100):
-    unit_train_inputX.append(np.random.normal(0, 0.1, 14) + random.randint(-1, 1))
-    if np.dot(unit_train_inputX[-1], xx) < 0:
+    unit_train_inputX.append(np.random.normal(0, 0.1, 14))
+    if random.uniform(0, 3) > 1:
         unit_train_inputY.append([0])
+        unit_train_inputX[-1] += random.randint(-1, 1)
     else:
         unit_train_inputY.append([1])
 

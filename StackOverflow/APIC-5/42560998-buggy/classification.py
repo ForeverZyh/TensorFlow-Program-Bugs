@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ >= "1.0"
+tf.set_random_seed(20180130)
+
 n_input = 10
 n_classes = 4
 x = tf.placeholder("float", [None, n_input])
@@ -13,4 +16,4 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 input_y = [["apple", "apple", "orange", "banana"]]
 input_x = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
-sess.run(cost, feed_dict={x: input_x, y: input_y})
+print(sess.run(cost, feed_dict={x: input_x, y: input_y}))

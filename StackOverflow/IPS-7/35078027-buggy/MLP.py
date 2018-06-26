@@ -1,6 +1,9 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 mnist = input_data.read_data_sets("/tmp/data", one_hot=True)
 # one hidden layer MLP
 

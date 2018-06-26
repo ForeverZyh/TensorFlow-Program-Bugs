@@ -2,6 +2,10 @@ import tensorflow as tf
 import numpy as np
 import time
 
+assert tf.__version__ == "1.8.0"
+np.random.seed(20180130)
+tf.set_random_seed(20180130)
+
 batch_size = 32
 max_steps = 1000
 
@@ -25,7 +29,7 @@ def loss(logits, _labels):
     labels = tf.layers.flatten(_labels)
     losses = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=labels, name="losses")
     tf.summary.histogram("losses", losses)
-    return losses
+    return tf.reduce_mean(losses)
 
 
 with tf.Graph().as_default():
@@ -55,5 +59,6 @@ with tf.Graph().as_default():
                                                                                                       1])
         _, loss_value, _ = sess.run([train_op, losses, summary_op],
                                     feed_dict={images: data_batch, labels: label_batch})
+        print("step %d: " % step, loss_value)
 
         duration = time.time() - start_time

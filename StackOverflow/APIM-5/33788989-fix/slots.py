@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 x = tf.placeholder(tf.float32, [None])
 y = tf.placeholder(tf.float32, [None])
 W = tf.Variable(tf.zeros([1]))
@@ -19,4 +22,5 @@ sess = tf.Session()
 sess.run(init_op)
 # now train your model
 for i in range(100):
-    sess.run(train_op, feed_dict={x: [1], y: [2]})
+    _, cost = sess.run([train_op, loss], feed_dict={x: [1], y: [2]})
+    print(cost)

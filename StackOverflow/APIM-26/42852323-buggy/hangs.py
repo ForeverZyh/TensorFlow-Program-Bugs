@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 x1 = [1, 3, 4, 5, 1, 6, -1, -3]
 x2 = [5, 2, 1, 5, 0, 2, 4, 2]
 y = [6, 5, 5, 10, 1, 8, 3, -1]

@@ -3,6 +3,9 @@ import logging
 
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 log = logging.getLogger(__name__)
 
 # Job Names

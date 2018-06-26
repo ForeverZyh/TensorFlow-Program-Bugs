@@ -1,6 +1,9 @@
 import tensorflow as tf
 from tensorflow.python.ops import control_flow_ops
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 xs = [tf.constant(x) for x in range(10)]
 xs = [tf.Print(x, [x]) for x in xs]
 dependency = None

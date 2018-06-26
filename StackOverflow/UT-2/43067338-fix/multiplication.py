@@ -1,6 +1,10 @@
 import numpy as np
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+
 M = 5
 N = 2
 T = 3
@@ -19,4 +23,4 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     print(sess.run(A_tf))
     p = tf.tensordot(A_tf, B_tf, axes=[[1], [0]])
-    sess.run(p)
+    print(sess.run(p))

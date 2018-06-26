@@ -5,6 +5,11 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.contrib import *
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+random.seed(20180130)
+
 _R_MEAN = 123.68
 _G_MEAN = 116.78
 _B_MEAN = 103.94

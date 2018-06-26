@@ -11,6 +11,9 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 
 sess = tf.InteractiveSession()

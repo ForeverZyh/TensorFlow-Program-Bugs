@@ -1,6 +1,8 @@
 import tensorflow as tf
 
-#  tf.version == 1.0.0
+assert tf.__version__ == "1.0.0"
+tf.set_random_seed(20180130)
+
 v_1 = tf.Variable(1)
 v_2 = tf.Variable(v_1.initialized_value())
 

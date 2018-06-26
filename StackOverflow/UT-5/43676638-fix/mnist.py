@@ -6,6 +6,9 @@ import tensorflow as tf
 from tensorflow.contrib.rnn.python.ops import rnn, rnn_cell
 from tensorflow.examples.tutorials.mnist import input_data
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 n_input = 28  # MNIST data input (img shape: 28*28)
 n_steps = 28  # timesteps
 n_hidden = 128  # hidden layer num of features

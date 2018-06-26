@@ -4,6 +4,11 @@ import numpy as np
 import random
 from sklearn.model_selection import train_test_split
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+random.seed(20180130)
+
 n_data = 100
 X = [np.random.uniform(0, 255, 900) for _ in range(n_data)]
 X = np.asarray(X, dtype=np.float32)

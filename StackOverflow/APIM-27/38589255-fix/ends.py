@@ -7,6 +7,9 @@ import urllib
 import tensorflow as tf
 from six.moves import xrange  # pylint: disable=redefined-builtin
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 # Global constants describing the CIFAR-10 data set.
 NUM_CLASSES = 10
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 5000

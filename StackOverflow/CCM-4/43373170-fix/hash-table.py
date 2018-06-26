@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 table = tf.contrib.lookup.MutableHashTable(key_dtype=tf.string,
                                            value_dtype=tf.float32,
                                            default_value=-1)

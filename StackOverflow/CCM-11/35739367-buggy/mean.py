@@ -1,6 +1,9 @@
 import tensorflow as tf
 import numpy as np
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 isTrain = tf.placeholder(tf.bool)
 user_input = tf.placeholder(tf.float32)
 

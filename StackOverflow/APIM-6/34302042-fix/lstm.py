@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 input_data = tf.placeholder(tf.float32, [10])
 initial_state = tf.Variable(tf.truncated_normal([10]))
 final_state = initial_state + input_data
@@ -13,3 +16,4 @@ for step in range(num_steps):
                         {input_data: x,
                          initial_state: state})
     x = state
+    print(x)

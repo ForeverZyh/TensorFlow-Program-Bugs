@@ -2,6 +2,8 @@
 import tensorflow as tf
 import math
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
 
 def sample_prob(probs):
     return tf.nn.relu(

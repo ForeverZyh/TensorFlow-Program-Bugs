@@ -3,6 +3,8 @@ from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets('/tmp/data', one_hot=True)
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
 
 def conv_layer(input, size_in, size_out, name="conv"):
     with tf.name_scope(name):

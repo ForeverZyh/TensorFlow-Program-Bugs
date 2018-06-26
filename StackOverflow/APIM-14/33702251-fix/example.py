@@ -2,6 +2,8 @@ import tensorflow as tf
 import numpy as np
 
 # tf.version == 0.7.0
+# 0.7.0 version tensorflow even does not have the attribute '__version__'
+np.random.seed(20180130)
 # Make 100 phony data points in NumPy.
 x_data = np.random.rand(2, 100)  # Random input
 y_data = np.dot([0.100, 0.200], x_data) + 0.300

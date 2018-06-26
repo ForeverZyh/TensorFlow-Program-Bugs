@@ -17,6 +17,11 @@ import random
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+random.seed(20180130)
+
 n_data = 88041
 
 ## Cast to 32bit

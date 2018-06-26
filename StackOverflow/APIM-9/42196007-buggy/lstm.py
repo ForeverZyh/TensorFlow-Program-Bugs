@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 length = 30
 lstm = tf.nn.rnn_cell.BasicLSTMCell(128)
 cell = tf.nn.rnn_cell.MultiRNNCell([lstm] * 2)
@@ -48,3 +51,6 @@ losses = tf.losses
 # losses.add_loss(tf.reduce_mean(tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)))
 losses.add_loss(loss)
 total_loss = losses.get_total_loss()
+sess = tf.Session()
+sess.run(tf.global_variables_initializer())
+print(sess.run(total_loss))

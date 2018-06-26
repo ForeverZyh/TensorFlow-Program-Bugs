@@ -1,4 +1,9 @@
 import tensorflow as tf
+import numpy as np
+
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
 
 n_input = 300
 n_classes = 10
@@ -32,3 +37,7 @@ cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, label
 train_step = tf.train.GradientDescentOptimizer(0.3).minimize(cost)
 
 init = tf.initialize_all_variables()
+sess = tf.Session()
+sess.run(init)
+print(sess.run(cost, feed_dict={x: np.random.randint(0, 10, [2, n_input]),
+                                y: [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0]]}))

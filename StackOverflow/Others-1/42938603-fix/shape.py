@@ -1,6 +1,9 @@
 import tensorflow as tf
 import numpy as np
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
 
 def conv3d(inputs, weights, biases, layer_name, act=tf.nn.relu, padding='VALID'):
     preactivate = tf.nn.conv3d(inputs, weights, strides=[1, 1, 1, 1, 1], padding=padding) + biases

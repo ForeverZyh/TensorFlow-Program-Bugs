@@ -1,6 +1,10 @@
 import tensorflow as tf
 import numpy as np
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+
 T = 100
 noise = 10 * np.random.random(size=T).astype(np.float32)
 x = np.array([np.arange(T), np.ones(T)]).astype(np.float32)

@@ -3,6 +3,10 @@ import numpy as np
 import rbm
 from tensorflow.examples.tutorials.mnist import input_data
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+
 
 def build_model(X, w1, b1, wo, bo):
     h1 = tf.nn.sigmoid(tf.matmul(X, w1) + b1)

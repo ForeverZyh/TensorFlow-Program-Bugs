@@ -4,6 +4,8 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
 
 def weight_variable(shape):
     initial = tf.truncated_normal(shape, stddev=0.1)

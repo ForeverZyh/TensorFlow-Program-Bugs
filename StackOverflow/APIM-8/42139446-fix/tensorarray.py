@@ -1,6 +1,8 @@
 import tensorflow as tf
 
-# tf.version == 1.0.0
+assert tf.__version__ == "1.0.0"
+tf.set_random_seed(20180130)
+
 aI = tf.TensorArray(tf.int32, 2)
 aO = tf.TensorArray(tf.int32, 2)
 aI = aI.unstack([[1, 2], [1, 2]])

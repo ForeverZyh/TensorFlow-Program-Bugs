@@ -1,6 +1,10 @@
 import tensorflow as tf
 import numpy as np
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+
 slim = tf.contrib.slim
 
 dtype = tf.float16

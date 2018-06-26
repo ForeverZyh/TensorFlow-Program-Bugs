@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 pred = tf.placeholder(tf.bool)
 x = tf.Variable([1])
 

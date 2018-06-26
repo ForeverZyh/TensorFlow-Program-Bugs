@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 fifo_q = tf.FIFOQueue(
     capacity=10,
     dtypes=[tf.string, tf.string],

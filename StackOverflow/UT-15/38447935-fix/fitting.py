@@ -1,5 +1,7 @@
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
 
 def weight_variable(shape):
     """Initialize the weights with random weights"""
@@ -16,13 +18,13 @@ y = tf.matmul(x, w)
 
 error = tf.reduce_mean(tf.square(y_ - y))
 
-train_step = tf.train.AdamOptimizer(1e-5).minimize(error)
+train_step = tf.train.AdamOptimizer(1e-4).minimize(error)
 
 with tf.Session() as sess:
     sess.run(tf.initialize_all_variables())
 
     # Train the model and output every 1000 iterations
-    for i in range(1000000):
+    for i in range(50000):
         sess.run(train_step)
         err = sess.run(error)
 

@@ -2,6 +2,11 @@ import tensorflow as tf
 import numpy as np
 import random
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+random.seed(20180130)
+
 n_feature = 10
 n_data = 500
 data = np.random.normal(0, 0.1, [n_data, n_feature])
@@ -28,7 +33,7 @@ def neuralNetworkTrain(x):
     sess.run(tf.global_variables_initializer())
     for i in range(100):
         _, loss = sess.run([optimize, cost], feed_dict={x: data, y: label})
-        print("loss %g", loss)
+        print("loss %g"% loss)
 
 
 neuralNetworkTrain(x)

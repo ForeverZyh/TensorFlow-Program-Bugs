@@ -5,6 +5,10 @@ import tensorflow as tf
 from tensorflow.python.training import queue_runner
 from tensorflow.python.ops import control_flow_ops
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+numpy.random.seed(20180130)
+
 row_count, column_count = 7, 5
 batch_size, step_size = 3, 2
 

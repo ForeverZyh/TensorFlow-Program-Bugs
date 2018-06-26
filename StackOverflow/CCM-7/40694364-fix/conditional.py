@@ -1,6 +1,10 @@
 import tensorflow as tf
 import random
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+random.seed(20180130)
+
 a = tf.placeholder(tf.int32)
 zero = tf.constant(0)
 x1, y1 = 1, 2

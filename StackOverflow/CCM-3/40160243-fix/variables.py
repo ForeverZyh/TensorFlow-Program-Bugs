@@ -1,7 +1,9 @@
 import tensorflow as tf
 import numpy as np
 
-#  tf.version == 1.0.0
+assert tf.__version__ == "1.0.0"
+tf.set_random_seed(20180130)
+
 data = np.random.randint(1000, size=10000)
 x = tf.Variable(data, name='x')
 x0 = x.initialized_value()

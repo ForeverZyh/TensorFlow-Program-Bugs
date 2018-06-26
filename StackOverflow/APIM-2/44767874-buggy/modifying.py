@@ -1,9 +1,11 @@
 import tensorflow as tf
 import time
 
+assert tf.__version__ == "1.8.0"
+
 tf.set_random_seed(seed=0)
 global_step = tf.constant(100)
-training_steps = tf.Variable(0, trainable=False)
+training_steps = 10
 supervisor = tf.train.Supervisor(logdir="./log",
                                  global_step=global_step)
 
@@ -20,8 +22,8 @@ with supervisor.managed_session() as sess:
     start_time = time.time()
 
     # train
-    for step in range(1, training_steps):
-
+    for step in range(1, training_steps + 1):
+        print("step %d: " % step)
         # check for any raised exceptions
         if supervisor.should_stop():
             break

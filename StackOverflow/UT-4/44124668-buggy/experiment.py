@@ -4,6 +4,11 @@ import numpy as np
 import tensorflow as tf
 import random
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+np.random.seed(20180130)
+random.seed(20180130)
+
 batch_size = 50
 n_input = 56 * 56 * 3
 n_classes = 10

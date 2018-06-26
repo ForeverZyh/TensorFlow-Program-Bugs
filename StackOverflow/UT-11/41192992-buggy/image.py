@@ -1,6 +1,9 @@
 from tensorflow.contrib.keras.api.keras.preprocessing import image
 import tensorflow as tf
 
+assert tf.__version__ == "1.8.0"
+tf.set_random_seed(20180130)
+
 img_path = 'sample.jpg'
 
 import numpy as np

@@ -1,7 +1,9 @@
 import tensorflow as tf
 import numpy as np
 
-#  tf.version == 0.12.1
+assert tf.__version__[:len("0.12.")] == "0.12."
+np.random.seed(20180130)
+tf.set_random_seed(20180130)
 
 features = [tf.contrib.layers.real_valued_column("x", dimension=1)]
 
@@ -13,4 +15,4 @@ input_fn = tf.contrib.learn.io.numpy_input_fn({"x": x}, y, batch_size=4, num_epo
 
 estimator.fit(input_fn=input_fn, steps=1000)
 
-estimator.evaluate(input_fn=input_fn)
+print(estimator.evaluate(input_fn=input_fn))
