@@ -8,23 +8,38 @@ All reproducible bugs can be found in two files `StackOverflow` and `Github`. Ev
 
 Most of the sujects run on TensorFlow 1.8.0. The rest of them can only run on other specific versions of TensorFlow. 
 
-Please make sure you get the following versions of TensorFlow:
+We encoruage you to use `conda` or `virtualenv` to control your different versions of TensorFlow. Please make sure you get the following versions of TensorFlow:
 
 * 1.8.0
+* 1.1.0
 * 1.0.0
-* 0.12.1rc
+* 0.12.0rc1
 * 0.7.0
 * 0.5.0
+
+And we use python3 in most of the cases, except for `Github/APIM-4` using python2.7.x.
 
 ## StackOverflow
 
 The assertion in each subject describes the version of TensorFlow on which the subject was reproduced.
 
-Inputs of most sujects are integrated in the programs. The rest of them have been downloaded. We have fixed the random seeds of `tensorflow`, `numpy`, and `random` to get more stable results.
+Inputs of most subjects are integrated into the programs. The rest of them have been downloaded. We have fixed the random seeds of `tensorflow`, `numpy`, and `random` to get more stable results.
+
+Except for `SI-1` and `Others-4` , all subjects contain only one entry python file which can be run using the command `python entry.py`. Testing methods of `SI-1` and `Others-4` are described in READMEs in these two files respectively.
 
 ## Github
 
-To be continued...
+We provide a `test_script.py` as a test entry of each suject. The assertion in each `test_script.py` describes the version of TensorFlow and python on which the subject was reproduced.
+
+## Datasets
+
+We provide some useful datasets in the `Datasets` file. Some of them are partially downloaded since they are so large.
+
+http://yann.lecun.com/exdb/mnist
+
+http://vis-www.cs.umass.edu/lfw
+
+http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
 
 ##Citation
 
