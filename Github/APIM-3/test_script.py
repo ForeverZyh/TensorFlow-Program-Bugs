@@ -26,4 +26,6 @@ def get_target_dir():
 
 
 subprocess.call([interpreter_path, "./%s/download.py" % get_target_dir(), "mnist"])
-subprocess.call([interpreter_path, "./%s/main.py" % get_target_dir(), "--is_train", "True", "--dataset", "mnist"])
+subprocess.call([interpreter_path, "./%s/main.py" % get_target_dir(), "--is_train", "True", "--dataset", "mnist",
+                 "--checkpoint_dir", "checkpoint/%s" % get_target_dir(), "--sample_dir",
+                 "samples/%s" % get_target_dir()])

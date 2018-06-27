@@ -41,7 +41,9 @@ http://vis-www.cs.umass.edu/lfw
 
 http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
 
-##Citation
+https://github.com/daviddao/spatial-transformer-tensorflow
+
+## Citation
 
 Paper describing the project:
 

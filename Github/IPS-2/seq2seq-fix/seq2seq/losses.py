@@ -18,7 +18,7 @@ def cross_entropy_sequence_loss(logits, targets, sequence_length):
     A tensor of shape [B, T] that contains the loss per example, per time step.
   """
   with tf.name_scope("cross_entropy_sequence_loss"):
-    losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=targets)
+    losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits, targets)
 
     # Mask out the losses we don't care about
     loss_mask = tf.sequence_mask(

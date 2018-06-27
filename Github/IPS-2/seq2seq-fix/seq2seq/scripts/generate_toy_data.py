@@ -109,8 +109,7 @@ def main():
 
   # Generate dataset
   examples = list(generate_fn(ARGS.num_examples, ARGS.min_len, ARGS.max_len))
-  # os.makedirs(ARGS.output_dir, exist_ok=True)
-  os.makedirs(ARGS.output_dir)
+  os.makedirs(ARGS.output_dir, exist_ok=True)
 
   # Write train data
   train_sources, train_targets = zip(*examples)

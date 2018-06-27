@@ -1,25 +1,36 @@
 import math
-import numpy as np
+import numpy as np 
 import tensorflow as tf
 
 from tensorflow.python.framework import ops
 
 from utils import *
 
-
 class batch_norm(object):
-
-    def __init__(self, epsilon=1e-5, momentum=0.9, name="batch_norm"):
-        with tf.variable_scope(name):
+    """Code modification of http://stackoverflow.com/a/33950177"""
+    def __init__(self, batch_size, epsilon=1e-5, momentum = 0.1, name="batch_norm"):
+        with tf.variable_scope(name) as scope:
             self.epsilon = epsilon
             self.momentum = momentum
-            self.name = name
+            self.batch_size = batch_size
 
+            self.ema = tf.train.ExponentialMovingAverage(decay=self.momentum)
+            self.name=name
 
     def __call__(self, x, train=True):
-        return tf.contrib.layers.batch_norm(x, decay=self.momentum, updates_collections=None, epsilon=self.epsilon,
-                                            scale=True, scope=self.name)
+        shape = x.get_shape().as_list()
 
+        with tf.variable_scope(self.name) as scope:
+            self.gamma = tf.get_variable("gamma", [shape[-1]],
+                                initializer=tf.random_normal_initializer(1., 0.02))
+            self.beta = tf.get_variable("beta", [shape[-1]],
+                                initializer=tf.constant_initializer(0.))
+
+            self.mean, self.variance = tf.nn.moments(x, [0, 1, 2])
+
+            return tf.nn.batch_norm_with_global_normalization(
+                x, self.mean, self.variance, self.beta, self.gamma, self.epsilon,
+                scale_after_normalization=True)
 
 def binary_cross_entropy(preds, targets, name=None):
     """Computes binary cross entropy given `preds`.
@@ -37,17 +48,15 @@ def binary_cross_entropy(preds, targets, name=None):
         preds = ops.convert_to_tensor(preds, name="preds")
         targets = ops.convert_to_tensor(targets, name="targets")
         return tf.reduce_mean(-(targets * tf.log(preds + eps) +
-                                (1. - targets) * tf.log(1. - preds + eps)))
-
+                              (1. - targets) * tf.log(1. - preds + eps)))
 
 def conv_cond_concat(x, y):
     """Concatenate conditioning vector on feature map axis."""
     x_shapes = x.get_shape()
     y_shapes = y.get_shape()
-    return tf.concat([x, y * tf.ones([x_shapes[0], x_shapes[1], x_shapes[2], y_shapes[3]])], 3)
+    return tf.concat(3, [x, y*tf.ones([x_shapes[0], x_shapes[1], x_shapes[2], y_shapes[3]])])
 
-
-def conv2d(input_, output_dim,
+def conv2d(input_, output_dim, 
            k_h=5, k_w=5, d_h=2, d_w=2, stddev=0.02,
            name="conv2d"):
     with tf.variable_scope(name):
@@ -60,23 +69,22 @@ def conv2d(input_, output_dim,
 
         return conv
 
-
 def deconv2d(input_, output_shape,
              k_h=5, k_w=5, d_h=2, d_w=2, stddev=0.02,
              name="deconv2d", with_w=False):
     with tf.variable_scope(name):
         # filter : [height, width, output_channels, in_channels]
-        w = tf.get_variable('w', [k_h, k_w, output_shape[-1], input_.get_shape()[-1]],
+        w = tf.get_variable('w', [k_h, k_h, output_shape[-1], input_.get_shape()[-1]],
                             initializer=tf.random_normal_initializer(stddev=stddev))
-
+        
         try:
             deconv = tf.nn.conv2d_transpose(input_, w, output_shape=output_shape,
-                                            strides=[1, d_h, d_w, 1])
+                                strides=[1, d_h, d_w, 1])
 
         # Support for verisons of TensorFlow before 0.7.0
         except AttributeError:
             deconv = tf.nn.deconv2d(input_, w, output_shape=output_shape,
-                                    strides=[1, d_h, d_w, 1])
+                                strides=[1, d_h, d_w, 1])
 
         biases = tf.get_variable('biases', [output_shape[-1]], initializer=tf.constant_initializer(0.0))
         deconv = tf.reshape(tf.nn.bias_add(deconv, biases), deconv.get_shape())
@@ -86,10 +94,11 @@ def deconv2d(input_, output_shape,
         else:
             return deconv
 
-
 def lrelu(x, leak=0.2, name="lrelu"):
-    return tf.maximum(x, leak * x)
-
+    with tf.variable_scope(name):
+        f1 = 0.5 * (1 + leak)
+        f2 = 0.5 * (1 - leak)
+        return f1 * x + f2 * abs(x)
 
 def linear(input_, output_size, scope=None, stddev=0.02, bias_start=0.0, with_w=False):
     shape = input_.get_shape().as_list()
@@ -98,7 +107,7 @@ def linear(input_, output_size, scope=None, stddev=0.02, bias_start=0.0, with_w=
         matrix = tf.get_variable("Matrix", [shape[1], output_size], tf.float32,
                                  tf.random_normal_initializer(stddev=stddev))
         bias = tf.get_variable("bias", [output_size],
-                               initializer=tf.constant_initializer(bias_start))
+            initializer=tf.constant_initializer(bias_start))
         if with_w:
             return tf.matmul(input_, matrix) + bias, matrix, bias
         else:

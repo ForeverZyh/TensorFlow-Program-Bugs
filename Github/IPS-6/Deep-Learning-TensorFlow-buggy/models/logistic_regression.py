@@ -6,7 +6,6 @@ import model
 
 
 class LogisticRegression(model.Model):
-
     """Simple Logistic Regression using TensorFlow.
     The interface of the class is sklearn-like.
     """
@@ -49,7 +48,7 @@ class LogisticRegression(model.Model):
         self.model_output = tf.nn.softmax(tf.matmul(self.input_data, self.W_) + self.b_)
 
         self._create_cost_function_node(self.loss_func, self.model_output, self.input_labels)
-        tf.train.GradientDescentOptimizer(self.learning_rate).minimize(self.cost)
+        self.train_step = tf.train.AdamOptimizer(self.learning_rate).minimize(self.cost)
         self._create_test_node()
 
     def _create_placeholders(self, n_features, n_classes):
@@ -83,7 +82,7 @@ class LogisticRegression(model.Model):
         with tf.name_scope("test"):
             correct_prediction = tf.equal(tf.argmax(self.model_output, 1), tf.argmax(self.input_labels, 1))
             self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
-            _ = tf.scalar_summary('accuracy', self.accuracy)
+            _ = tf.summary.scalar('accuracy', self.accuracy)
 
     def fit(self, train_set, train_labels, validation_set=None, validation_labels=None, restore_previous_model=False):
 
@@ -115,10 +114,10 @@ class LogisticRegression(model.Model):
 
         for i in range(self.num_epochs):
 
-            shuff = zip(train_set, train_labels)
+            shuff = list(zip(train_set, train_labels))
             np.random.shuffle(shuff)
 
-            batches = [_ for _ in utilities.gen_batches(zip(train_set, train_labels), self.batch_size)]
+            batches = [_ for _ in utilities.gen_batches(shuff, self.batch_size)]
 
             for batch in batches:
                 x_batch, y_batch = zip(*batch)

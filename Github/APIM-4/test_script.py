@@ -28,4 +28,6 @@ def get_target_dir():
 
 subprocess.call([interpreter_path, "./%s/download.py" % get_target_dir(), "celebA"])
 subprocess.call(
-    [interpreter_path, "./%s/main.py" % get_target_dir(), "--dataset", "celebA", "--input_height=64", "--train=True"])
+    [interpreter_path, "./%s/main.py" % get_target_dir(), "--dataset", "celebA", "--input_height=64", "--train=True",
+     "--checkpoint_dir", "checkpoint/%s" % get_target_dir(), "--sample_dir",
+     "samples/%s" % get_target_dir()])

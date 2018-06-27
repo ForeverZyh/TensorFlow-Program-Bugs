@@ -55,7 +55,7 @@ class AttentionDecoder(DecoderBase):
   def _pack_outputs(outputs_ta, final_loop_state):
     logits, predictions = DecoderBase._pack_outputs(outputs_ta,
                                                     final_loop_state)
-    attention_scores = tf.transpose(final_loop_state.stack(), [1, 0, 2])
+    attention_scores = tf.transpose(final_loop_state.pack(), [1, 0, 2])
     return AttentionDecoderOutput(logits, predictions, attention_scores)
 
   def _step(self, time_, cell_output, cell_state, loop_state, next_input_fn):
@@ -79,7 +79,7 @@ class AttentionDecoder(DecoderBase):
       next_loop_state = loop_state.write(time_ - 1, att_scores)
 
     # Softmax computation
-    softmax_input = tf.concat([cell_output, attention_context], 1)
+    softmax_input = tf.concat(1, [cell_output, attention_context])
     logits = tf.contrib.layers.fully_connected(
         inputs=softmax_input,
         num_outputs=self.vocab_size,
@@ -97,7 +97,7 @@ class AttentionDecoder(DecoderBase):
     # Append the attention context to the inputs
     next_input = next_input_fn(time_, (None if initial_call else cell_output),
                                cell_state, loop_state, outputs)
-    next_input = tf.concat([next_input, attention_context], 1)
+    next_input = tf.concat(1, [next_input, attention_context])
 
     return DecoderStepOutput(
         outputs=outputs,

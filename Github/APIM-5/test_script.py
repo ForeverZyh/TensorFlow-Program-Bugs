@@ -26,4 +26,6 @@ def get_target_dir():
 
 
 subprocess.call(
-    [interpreter_path, "./%s/train-dcgan.py" % get_target_dir(), "--dataset", "lfw-64/George_W_Bush"])
+    [interpreter_path, "./%s/train-dcgan.py" % get_target_dir(), "--dataset", "lfw-64/George_W_Bush",
+     "--checkpoint_dir", "checkpoint/%s" % get_target_dir(), "--sample_dir",
+     "samples/%s" % get_target_dir()])

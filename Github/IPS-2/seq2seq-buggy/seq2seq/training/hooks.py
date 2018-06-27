@@ -10,7 +10,7 @@ from tensorflow.python.client import timeline
 from tensorflow.python.platform import gfile
 
 
-class SecondOrStepTimer(basic_session_run_hooks.SecondOrStepTimer):
+class SecondOrStepTimer(basic_session_run_hooks._SecondOrStepTimer):
   """Helper class to count both seconds and steps.
   """
   pass

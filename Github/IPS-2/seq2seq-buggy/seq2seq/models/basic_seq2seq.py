@@ -35,8 +35,8 @@ class BasicSeq2Seq(Seq2SeqBase):
     params.update({
         "rnn_cell.type": "LSTMCell",
         "rnn_cell.num_units": 128,
-        "rnn_cell.dropout_input_keep_prob": 1.0,
-        "rnn_cell.dropout_output_keep_prob": 1.0,
+        "rnn_cell.dropout_input_keep_prob": 0.5,
+        "rnn_cell.dropout_output_keep_prob": 0.5,
         "rnn_cell.num_layers": 1
     })
     return params

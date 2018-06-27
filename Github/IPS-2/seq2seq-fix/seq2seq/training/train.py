@@ -5,6 +5,20 @@
 
 import os
 import tempfile
+import sys
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
+
+
+try:
+    sys.path.insert(0, find_root_path(os.path.abspath(__file__)))
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 from seq2seq import inputs
 from seq2seq import models
 from seq2seq.training import HParamsParser
@@ -98,7 +112,7 @@ def create_experiment(output_dir):
     """Builds the model graph"""
     return model(features, labels, params, mode)
 
-  estimator = tf.estimator.Estimator(
+  estimator = tf.contrib.learn.estimator.Estimator(
       model_fn=model_fn, model_dir=output_dir)
 
   # Create training Hooks
@@ -110,7 +124,7 @@ def create_experiment(output_dir):
       output_dir=os.path.join(estimator.model_dir, "metadata"), step=10)
   train_monitors = [model_analysis_hook, train_sample_hook, metadata_hook]
 
-  experiment = tf.contrib.learn.Experiment(
+  experiment = tf.contrib.learn.experiment.Experiment(
       estimator=estimator,
       train_input_fn=train_input_fn,
       eval_input_fn=eval_input_fn,

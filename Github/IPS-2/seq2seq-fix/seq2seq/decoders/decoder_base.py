@@ -5,7 +5,7 @@ Base class for sequence decoders.
 from collections import namedtuple
 
 import tensorflow as tf
-from seq2seq.graph_module import GraphModule
+from seq2seq import GraphModule
 
 
 class DecoderOutput(namedtuple("DecoderOutput", ["logits", "predictions"])):
@@ -85,7 +85,7 @@ class FixedDecoderInputs(GraphModule):
           dtype=self.inputs.dtype,
           size=tf.shape(self.inputs)[1],
           name="inputs_ta")
-      self.inputs_ta = self.inputs_ta.unstack(
+      self.inputs_ta = self.inputs_ta.unpack(
           tf.transpose(self.inputs, [1, 0, 2]))
       self.max_seq_len = tf.reduce_max(sequence_length, name="max_seq_len")
       self.batch_size = tf.identity(tf.shape(inputs)[0], name="batch_size")
@@ -189,9 +189,9 @@ class DecoderBase(GraphModule):
   def _pack_outputs(outputs_ta, _final_loop_state):
     """Transposes outputs from time-major to batch-major.
     """
-    logits = tf.transpose(outputs_ta.logits.stack(), [1, 0, 2], name="logits")
+    logits = tf.transpose(outputs_ta.logits.pack(), [1, 0, 2], name="logits")
     predictions = tf.transpose(
-        outputs_ta.predictions.stack(), [1, 0], name="predictions")
+        outputs_ta.predictions.pack(), [1, 0], name="predictions")
     return DecoderOutput(logits=logits, predictions=predictions)
 
   def _build(self, input_fn, initial_state, sequence_length):

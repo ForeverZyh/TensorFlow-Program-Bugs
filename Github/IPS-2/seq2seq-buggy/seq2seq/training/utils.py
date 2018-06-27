@@ -73,11 +73,11 @@ def create_input_fn(data_provider_fn,
     features, labels = featurizer_fn(features)
 
     # We need to merge features and labels so we can batch them together.
-    features.pop("record_key")
     feature_keys = features.keys()
     label_keys = labels.keys()
     features_and_labels = features.copy()
     features_and_labels.update(labels)
+
     if bucket_boundaries:
       bucket_num, batch = tf.contrib.training.bucket_by_sequence_length(
           input_length=features_and_labels["source_len"],

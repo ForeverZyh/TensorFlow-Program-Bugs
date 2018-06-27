@@ -36,6 +36,9 @@ class Model(object):
         :return: tuple of strings(models_dir, data_dir, summary_dir)
         """
 
+        for d in [config.models_dir, config.data_dir, config.summary_dir]:
+            if not os.path.isdir(d):
+                os.mkdir(d)
         models_dir = os.path.join(config.models_dir, self.main_dir)
         data_dir = os.path.join(config.data_dir, self.main_dir)
         summary_dir = os.path.join(config.summary_dir, self.main_dir)

@@ -75,29 +75,29 @@ class Seq2SeqFeaturizer(GraphModule):
         "target_tokens"])
 
     # Append SEQUENCE_END token to the source
-    output_dict["source_ids"] = tf.concat([
+    output_dict["source_ids"] = tf.concat(0, [
         output_dict["source_ids"],
         [self.source_vocab_info.special_vocab.SEQUENCE_END]
-    ], 0)
+    ])
     output_dict["source_tokens"] = tf.concat(
-        [output_dict["source_tokens"], ["SEQUENCE_END"]], 0)
+        0, [output_dict["source_tokens"], ["SEQUENCE_END"]])
     output_dict["source_len"] += 1
 
     # Prepend SEQUENCE_START token to the target
     output_dict["target_ids"] = tf.concat(
-        [[self.target_vocab_info.special_vocab.SEQUENCE_START],
-            output_dict["target_ids"]], 0)
+        0, [[self.target_vocab_info.special_vocab.SEQUENCE_START],
+            output_dict["target_ids"]])
     output_dict["target_tokens"] = tf.concat(
-        [["SEQUENCE_START"], output_dict["target_tokens"]], 0)
+        0, [["SEQUENCE_START"], output_dict["target_tokens"]])
     output_dict["target_len"] += 1
 
     # Append SEQUENCE_END token to the target
-    output_dict["target_ids"] = tf.concat([
+    output_dict["target_ids"] = tf.concat(0, [
         output_dict["target_ids"],
         [self.target_vocab_info.special_vocab.SEQUENCE_END]
-    ], 0)
+    ])
     output_dict["target_tokens"] = tf.concat(
-        [output_dict["target_tokens"], ["SEQUENCE_END"]], 0)
+        0, [output_dict["target_tokens"], ["SEQUENCE_END"]])
     output_dict["target_len"] += 1
 
     # Cast to int32
