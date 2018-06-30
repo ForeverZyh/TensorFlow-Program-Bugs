@@ -22,7 +22,21 @@ FaceNet: A Unified Embedding for Face Recognition and Clustering: http://arxiv.o
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
 
+
+try:
+    sys.path.insert(0, os.path.join(find_root_path(os.path.abspath(__file__)), "src"))
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function

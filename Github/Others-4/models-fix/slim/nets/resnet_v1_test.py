@@ -20,7 +20,21 @@ from __future__ import print_function
 
 import numpy as np
 import tensorflow as tf
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
 
+
+try:
+    sys.path.insert(0, os.path.join(find_root_path(os.path.abspath(__file__)), "slim"))
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 from nets import resnet_utils
 from nets import resnet_v1
 
@@ -156,7 +170,7 @@ class ResnetUtilsTest(tf.test.TestCase):
     with tf.variable_scope(scope, values=[inputs]):
       with slim.arg_scope([slim.conv2d], outputs_collections='end_points'):
         net = resnet_utils.stack_blocks_dense(inputs, blocks, output_stride)
-        end_points = dict(tf.get_collection('end_points'))
+        end_points = ['/'.join(x.name.split('/')[:5]) for x in list(tf.get_collection('end_points'))]
         return net, end_points
 
   def testEndPointsV1(self):
@@ -276,6 +290,7 @@ class ResnetCompleteNetworkTest(tf.test.TestCase):
                                global_pool=global_pool,
                                output_stride=output_stride,
                                include_root_block=include_root_block,
+                               spatial_squeeze=False,
                                reuse=reuse,
                                scope=scope)
 

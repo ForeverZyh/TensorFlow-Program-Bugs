@@ -43,6 +43,8 @@ http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
 
 https://github.com/daviddao/spatial-transformer-tensorflow
 
+http://www.robots.ox.ac.uk/~vgg/data/vgg_face2
+
 ## Citation
 
 Paper describing the project:

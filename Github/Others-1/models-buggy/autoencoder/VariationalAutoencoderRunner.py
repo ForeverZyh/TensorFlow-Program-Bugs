@@ -1,5 +1,19 @@
 import numpy as np
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
 
+
+try:
+    sys.path.insert(0, find_root_path(os.path.abspath(__file__)))
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 import sklearn.preprocessing as prep
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
@@ -32,7 +46,7 @@ display_step = 1
 autoencoder = VariationalAutoencoder(n_input = 784,
                                      n_hidden = 200,
                                      optimizer = tf.train.AdamOptimizer(learning_rate = 0.001))
-
+autoencoder.generate()
 for epoch in range(training_epochs):
     avg_cost = 0.
     total_batch = int(n_samples / batch_size)

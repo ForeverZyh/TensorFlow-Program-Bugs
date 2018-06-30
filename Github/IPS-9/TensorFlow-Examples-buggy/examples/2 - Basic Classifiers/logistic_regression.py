@@ -13,7 +13,7 @@ mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 import tensorflow as tf
 
 # Parameters
-learning_rate = 0.01
+learning_rate = 0.005
 training_epochs = 25
 batch_size = 100
 display_step = 1
@@ -33,7 +33,7 @@ activation = tf.nn.softmax(tf.matmul(x, W) + b) # Softmax
 
 # Minimize error using cross entropy
 cost = -tf.reduce_sum(y*tf.log(activation)) # Cross entropy
-optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost) # Gradient Descent
+optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost) # Gradient Descent
 
 # Initializing the variables
 init = tf.initialize_all_variables()
