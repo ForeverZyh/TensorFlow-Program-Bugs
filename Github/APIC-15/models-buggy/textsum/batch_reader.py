@@ -262,4 +262,4 @@ class Batcher(object):
     Returns:
       feature: a feature text extracted.
     """
-    return ex.features.feature[key].bytes_list.value[0]
+    return ex.features.feature[key].bytes_list.value[0].decode('utf-8')

@@ -201,7 +201,7 @@ def vgg_16(inputs,
                          scope='dropout6')
       net = slim.conv2d(net, 4096, [1, 1], scope='fc7')
       # Convert end_points_collection into a end_point dict.
-      end_points = dic(tf.get_collection(end_points_collection))
+      end_points = dict(tf.get_collection(end_points_collection))
       if global_pool:
         net = tf.reduce_mean(net, [1, 2], keep_dims=True, name='global_pool')
         end_points['global_pool'] = net

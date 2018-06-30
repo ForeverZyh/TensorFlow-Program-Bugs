@@ -150,7 +150,7 @@ class DCGAN(object):
         d_optim = tf.train.AdamOptimizer(config.learning_rate, beta1=config.beta1) \
                           .minimize(self.d_loss, var_list=self.d_vars)
         g_optim = tf.train.AdamOptimizer(config.learning_rate, beta1=config.beta1) \
-                          .minimize(self.g_loss, var_list=self.g_vars)                
+                          .minimize(self.g_loss, var_list=self.g_vars)
         try:
             tf.global_variables_initializer().run()
         except:
@@ -412,13 +412,13 @@ Initializing a new one.
             h2 = lrelu(self.d_bns[1](conv2d(h1, self.df_dim*4, name='d_h2_conv'), self.is_training))
             h3 = lrelu(self.d_bns[2](conv2d(h2, self.df_dim*8, name='d_h3_conv'), self.is_training))
             h4 = linear(tf.reshape(h3, [-1, 8192]), 1, 'd_h4_lin')
-    
+
             return tf.nn.sigmoid(h4), h4
 
     def generator(self, z):
         with tf.variable_scope("generator") as scope:
             self.z_, self.h0_w, self.h0_b = linear(z, self.gf_dim*8*4*4, 'g_h0_lin', with_w=True)
-    
+
             # TODO: Nicer iteration pattern here. #readability
             hs = [None]
             hs[0] = tf.reshape(self.z_, [-1, 4, 4, self.gf_dim * 8])
@@ -443,7 +443,7 @@ Initializing a new one.
             name = 'g_h{}'.format(i)
             hs[i], _, _ = conv2d_transpose(hs[i - 1],
                 [self.batch_size, size, size, 3], name=name, with_w=True)
-    
+
             return tf.nn.tanh(hs[i])
 
     def save(self, checkpoint_dir, step):
