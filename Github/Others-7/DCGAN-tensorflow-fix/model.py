@@ -97,9 +97,9 @@ class DCGAN(object):
         self.d__sum = histogram_summary("d_", self.D_)
         self.G_sum = image_summary("G", self.G)
 
-        self.d_loss_real = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_logits, labels=tf.ones_like(self.D)))
-        self.d_loss_fake = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_logits_, labels=tf.zeros_like(self.D_)))
-        self.g_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_logits_, labels=tf.ones_like(self.D_)))
+        self.d_loss_real = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(self.D_logits, tf.ones_like(self.D)))
+        self.d_loss_fake = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(self.D_logits_, tf.zeros_like(self.D_)))
+        self.g_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(self.D_logits_, tf.ones_like(self.D_)))
 
         self.d_loss_real_sum = scalar_summary("d_loss_real", self.d_loss_real)
         self.d_loss_fake_sum = scalar_summary("d_loss_fake", self.d_loss_fake)
@@ -400,7 +400,7 @@ class DCGAN(object):
         
         y_vec = np.zeros((len(y), self.y_dim), dtype=np.float)
         for i, label in enumerate(y):
-            y_vec[i,y[i]] = 1.0
+            y_vec[i,int(y[i])] = 1.0
         
         return X/255.,y_vec
             

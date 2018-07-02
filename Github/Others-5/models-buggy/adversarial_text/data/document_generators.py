@@ -194,7 +194,9 @@ def imdb_documents(dataset='train',
     dirs.append(('train/unsup', None))
 
   for d, class_label in dirs:
+    print(d,class_label)
     for filename in os.listdir(os.path.join(FLAGS.imdb_input_dir, d)):
+      print(filename)
       is_validation = check_is_validation(filename, class_label)
       if is_validation and not include_validation:
         continue

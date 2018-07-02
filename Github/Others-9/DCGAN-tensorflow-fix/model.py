@@ -79,6 +79,7 @@ class DCGAN(object):
       self.c_dim = self.data[0].shape[-1]
 
     self.is_grayscale = (self.c_dim == 1)
+    print("is_grayscale: ", self.is_grayscale)
 
     self.build_model()
 

@@ -22,7 +22,21 @@ import numpy as np
 import tensorflow as tf
 
 from tensorflow.python.ops import control_flow_ops
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
 
+
+try:
+    sys.path.insert(0, os.path.join(find_root_path(os.path.abspath(__file__)),"inception"))
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 from inception.slim import ops
 from inception.slim import scopes
 from inception.slim import variables

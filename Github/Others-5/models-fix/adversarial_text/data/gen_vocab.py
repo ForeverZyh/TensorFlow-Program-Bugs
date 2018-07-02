@@ -22,7 +22,21 @@ from collections import defaultdict
 # Dependency imports
 
 import tensorflow as tf
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
 
+
+try:
+    sys.path.insert(0, find_root_path(os.path.abspath(__file__)))
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 from adversarial_text.data import data_utils
 from adversarial_text.data import document_generators
 
@@ -79,7 +93,7 @@ def main(_):
     fill_vocab_from_doc(doc, vocab_freqs, doc_counts)
 
   # Filter out low-occurring terms
-  vocab_freqs = dict((term, freq) for term, freq in vocab_freqs.iteritems()
+  vocab_freqs = dict((term, freq) for term, freq in vocab_freqs.items()
                      if doc_counts[term] > FLAGS.doc_count_threshold)
 
   # Sort by frequency

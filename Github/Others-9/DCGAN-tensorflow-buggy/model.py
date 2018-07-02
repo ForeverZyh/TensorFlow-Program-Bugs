@@ -78,7 +78,7 @@ class DCGAN(object):
     else:
       self.data = glob(os.path.join("./data", config.dataset, self.input_fname_pattern))
       self.c_dim = self.data[0].shape[-1]
-
+    print("is_grayscale: ", self.is_grayscale)
     self.build_model()
 
   def build_model(self):

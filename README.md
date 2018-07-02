@@ -29,7 +29,9 @@ Except for `SI-1` and `Others-4` , all subjects contain only one entry python fi
 
 ## Github
 
-We provide a `test_script.py` as a test entry of each suject. The assertion in each `test_script.py` describes the version of TensorFlow and python on which the subject was reproduced.
+We provide a `test_script.py` or `test-buggy.sh`,  `test-fix.sh` and `data.sh` as a test entry of most of sujects. The assertion in each `test_script.py` describes the version of TensorFlow and python on which the subject was reproduced.
+
+We provide  `README`s for the rest of them requiring speacial build configuration.
 
 ## Datasets
 
@@ -44,6 +46,8 @@ http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
 https://github.com/daviddao/spatial-transformer-tensorflow
 
 http://www.robots.ox.ac.uk/~vgg/data/vgg_face2
+
+http://ai.stanford.edu/~amaas/data/sentiment
 
 ## Citation
 
