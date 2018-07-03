@@ -9,7 +9,7 @@ import functools
 
 import tensorflow as tf
 from tensorflow.contrib import metrics
-from tensorflow.contrib.learn import metric_spec
+from tensorflow.contrib.learn import MetricSpec as metric_spec
 from tensorflow.python.ops import variable_scope
 from tensorflow.python.framework import ops
 

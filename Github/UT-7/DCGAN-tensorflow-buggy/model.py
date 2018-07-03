@@ -109,13 +109,13 @@ class DCGAN(object):
 
     self.d_loss_real = tf.reduce_mean(
       tf.nn.sigmoid_cross_entropy_with_logits(
-        logits=self.D_logits, labels=tf.ones_like(self.D)))
+        self.D_logits, tf.ones_like(self.D)))
     self.d_loss_fake = tf.reduce_mean(
       tf.nn.sigmoid_cross_entropy_with_logits(
-        logits=self.D_logits_, labels=tf.zeros_like(self.D_)))
+        self.D_logits_, tf.zeros_like(self.D_)))
     self.g_loss = tf.reduce_mean(
       tf.nn.sigmoid_cross_entropy_with_logits(
-        logits=self.D_logits_, labels=tf.ones_like(self.D_)))
+        self.D_logits_, tf.ones_like(self.D_)))
 
     self.d_loss_real_sum = scalar_summary("d_loss_real", self.d_loss_real)
     self.d_loss_fake_sum = scalar_summary("d_loss_fake", self.d_loss_fake)
@@ -326,10 +326,10 @@ class DCGAN(object):
 
         h1 = lrelu(self.d_bn1(conv2d(h0, self.df_dim + self.y_dim, name='d_h1_conv')))
         h1 = tf.reshape(h1, [self.batch_size, -1])      
-        h1 = tf.concat_v2([h1, y], 1)
+        h1 = tf.concat(1, [h1, y])
         
         h2 = lrelu(self.d_bn2(linear(h1, self.dfc_dim, 'd_h2_lin')))
-        h2 = tf.concat_v2([h2, y], 1)
+        h2 = tf.concat(1, [h2, y])
 
         h3 = linear(h2, 1, 'd_h3_lin')
         
@@ -375,11 +375,11 @@ class DCGAN(object):
 
         # yb = tf.expand_dims(tf.expand_dims(y, 1),2)
         yb = tf.reshape(y, [self.batch_size, 1, 1, self.y_dim])
-        z = tf.concat_v2([z, y], 1)
+        z = tf.concat(1, [z, y])
 
         h0 = tf.nn.relu(
             self.g_bn0(linear(z, self.gfc_dim, 'g_h0_lin')))
-        h0 = tf.concat_v2([h0, y], 1)
+        h0 = tf.concat(1, [h0, y])
 
         h1 = tf.nn.relu(self.g_bn1(
             linear(h0, self.gf_dim*2*s_h4*s_w4, 'g_h1_lin')))
@@ -431,10 +431,10 @@ class DCGAN(object):
 
         # yb = tf.reshape(y, [-1, 1, 1, self.y_dim])
         yb = tf.reshape(y, [self.batch_size, 1, 1, self.y_dim])
-        z = tf.concat_v2([z, y], 1)
+        z = tf.concat(1, [z, y])
 
         h0 = tf.nn.relu(self.g_bn0(linear(z, self.gfc_dim, 'g_h0_lin')))
-        h0 = tf.concat_v2([h0, y], 1)
+        h0 = tf.concat(1, [h0, y])
 
         h1 = tf.nn.relu(self.g_bn1(
             linear(h0, self.gf_dim*2*s_h4*s_w4, 'g_h1_lin'), train=False))
@@ -480,7 +480,7 @@ class DCGAN(object):
     
     y_vec = np.zeros((len(y), self.y_dim), dtype=np.float)
     for i, label in enumerate(y):
-      y_vec[i,y[i]] = 1.0
+      y_vec[i,int(y[i])] = 1.0
     
     return X/255.,y_vec
 

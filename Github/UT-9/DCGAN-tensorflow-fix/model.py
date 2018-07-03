@@ -284,7 +284,7 @@ class DCGAN(object):
           % (epoch, idx, batch_idxs,
             time.time() - start_time, errD_fake+errD_real, errG))
 
-        if np.mod(counter, 100) == 1:
+        if np.mod(counter, 5) == 1:
           if config.dataset == 'mnist':
             samples, d_loss, g_loss = self.sess.run(
               [self.sampler, self.d_loss, self.g_loss],
@@ -298,7 +298,7 @@ class DCGAN(object):
                   './{}/train_{:02d}_{:04d}.png'.format(config.sample_dir, epoch, idx))
             print("[Sample] d_loss: %.8f, g_loss: %.8f" % (d_loss, g_loss)) 
           else:
-            try:
+            # try:
               samples, d_loss, g_loss = self.sess.run(
                 [self.sampler, self.d_loss, self.g_loss],
                 feed_dict={
@@ -309,8 +309,8 @@ class DCGAN(object):
               save_images(samples, [8, 8],
                     './{}/train_{:02d}_{:04d}.png'.format(config.sample_dir, epoch, idx))
               print("[Sample] d_loss: %.8f, g_loss: %.8f" % (d_loss, g_loss)) 
-            except:
-              print("one pic error!...")
+            # except:
+            #   print("one pic error!...")
 
         if np.mod(counter, 500) == 2:
           self.save(config.checkpoint_dir, counter)

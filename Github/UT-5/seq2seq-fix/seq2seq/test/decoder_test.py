@@ -22,7 +22,22 @@ from __future__ import unicode_literals
 
 import tensorflow as tf
 import numpy as np
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
 
+
+try:
+    sys.path.insert(0, find_root_path(os.path.abspath(__file__)))
+
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 from seq2seq.decoders import BasicDecoder, AttentionDecoder, AttentionLayerDot
 from seq2seq.decoders import beam_search_decoder
 from seq2seq.inference import beam_search

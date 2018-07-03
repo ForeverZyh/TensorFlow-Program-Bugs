@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
 
 """
 Unit tests for input-related operations.
 """
-
 
 from __future__ import absolute_import
 from __future__ import division
@@ -11,6 +9,22 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import tensorflow as tf
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
+
+
+try:
+    sys.path.insert(0, find_root_path(os.path.abspath(__file__)))
+
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 from seq2seq.contrib import rnn_cell
 
 import numpy as np
@@ -26,12 +40,11 @@ class ExtendedMultiRNNCellTest(tf.test.TestCase):
 
     with tf.variable_scope("root", initializer=tf.constant_initializer(0.5)):
       standard_cell = tf.contrib.rnn.MultiRNNCell(
-          [tf.contrib.rnn.GRUCell(2)] * 2,
-          state_is_tuple=True)
+          [tf.contrib.rnn.GRUCell(2) for _ in range(2)], state_is_tuple=True)
       res_standard = standard_cell(inputs, state, scope="standard")
 
       test_cell = rnn_cell.ExtendedMultiRNNCell(
-          [tf.contrib.rnn.GRUCell(2)] * 2)
+          [tf.contrib.rnn.GRUCell(2) for _ in range(2)])
       res_test = test_cell(inputs, state, scope="test")
 
     with self.test_session() as sess:
@@ -52,8 +65,24 @@ class ExtendedMultiRNNCellTest(tf.test.TestCase):
 
     with tf.variable_scope("root", initializer=tf.constant_initializer(0.5)):
       test_cell = rnn_cell.ExtendedMultiRNNCell(
-          [tf.contrib.rnn.GRUCell(2)] * 2,
-          residual_connections=True, **kwargs)
+          [tf.contrib.rnn.GRUCell(2) for _ in range(2)], residual_connections=True, **kwargs)
+      res_test = test_cell(inputs, state, scope="test")
+
+    with self.test_session() as sess:
+      sess.run([tf.global_variables_initializer()])
+      return sess.run(res_test)
+
+
+  def _additional_test_with_residuals(self, inputs, **kwargs):
+    """Runs the cell in a session"""
+    inputs = tf.convert_to_tensor(inputs)
+    state = (
+        tf.constant(np.random.randn(1, 1)),
+        tf.constant(np.random.randn(1, 1)))
+
+    with tf.variable_scope("root", initializer=tf.constant_initializer(0.5)):
+      test_cell = rnn_cell.ExtendedMultiRNNCell(
+          [tf.contrib.rnn.GRUCell(1) for _ in range(2)], residual_connections=True, **kwargs)
       res_test = test_cell(inputs, state, scope="test")
 
     with self.test_session() as sess:
@@ -74,6 +103,13 @@ class ExtendedMultiRNNCellTest(tf.test.TestCase):
       self.assertEqual(res_[0].shape, (1, 2))
       self.assertEqual(res_[1][0].shape, (1, 2))
       self.assertEqual(res_[1][1].shape, (1, 2))
+
+    inputs = np.random.randn(1, 5)
+    with tf.variable_scope("additional_diff_input_size"):
+      res_ = self._additional_test_with_residuals(inputs, residual_combiner="add")
+      self.assertEqual(res_[0].shape, (1, 1))
+      self.assertEqual(res_[1][0].shape, (1, 1))
+      self.assertEqual(res_[1][1].shape, (1, 1))
 
     with tf.variable_scope("same_input_size_dense"):
       res_ = self._test_with_residuals(

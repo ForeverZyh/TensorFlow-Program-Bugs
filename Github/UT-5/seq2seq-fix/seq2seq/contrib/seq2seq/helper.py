@@ -32,7 +32,10 @@ import abc
 
 import six
 
-from tensorflow.contrib.distributions.python.ops import categorical
+try:
+    from tensorflow.python.ops.distributions import categorical
+except:
+    from tensorflow.contrib.distributions.python.ops import categorical
 # from tensorflow.contrib.seq2seq.python.ops import decoder
 from seq2seq.contrib.seq2seq import decoder
 from tensorflow.python.framework import dtypes
