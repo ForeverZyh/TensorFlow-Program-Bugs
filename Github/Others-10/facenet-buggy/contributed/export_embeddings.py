@@ -57,6 +57,22 @@ import numpy as np
 import sys
 import os
 import argparse
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
+
+
+try:
+    sys.path.insert(0, os.path.join(find_root_path(os.path.abspath(__file__)), "src"))
+
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 import facenet
 import align.detect_face
 import glob

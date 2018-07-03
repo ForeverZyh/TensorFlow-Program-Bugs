@@ -1,0 +1,31 @@
+import tensorflow as tf
+import sys
+import os
+import subprocess
+
+try:
+    assert len(sys.argv) == 2
+    version = ["-buggy", "-fix"][int(sys.argv[1])]
+except:
+    print(
+        "Please run 'python test_script 0' for testing the buggy-version and "
+        "'python test_script 1' for testing the fix-version.\nAborted...")
+    exit(1)
+
+interpreter_path = sys.executable
+print("Running at: ", interpreter_path)
+
+assert tf.__version__ == "1.8.0"
+
+
+def get_target_dir():
+    for x in os.listdir(os.path.dirname(os.path.abspath(__file__))):
+        if version in x:
+            return x
+    raise ValueError("No dir ends with %s!" % version)
+
+
+subprocess.call(
+    [interpreter_path, "./%s/lfads/run_lfads.py" % get_target_dir(), "--kind=train",
+     "--data_dir=/tmp/rnn_synth_data_v1.0/", "--data_filename_stem=chaotic_rnn_inputs_g2p5",
+     "--lfads_save_dir=/tmp/%s/lfads_chaotic_rnn_inputs_g2p5" % get_target_dir(), "--co_dim=1", "--factors_dim=20"])

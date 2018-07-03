@@ -17,7 +17,7 @@ class VariationalAutoencoder(object):
         self.z_log_sigma_sq = tf.add(tf.matmul(self.x, self.weights['log_sigma_w1']), self.weights['log_sigma_b1'])
 
         # sample from gaussian distribution
-        eps = tf.random_normal(tf.pack([tf.shape(self.x)[0], self.n_hidden]), 0, 1, dtype = tf.float32)
+        eps = tf.random_normal(tf.stack([tf.shape(self.x)[0], self.n_hidden]), 0, 1, dtype = tf.float32)
         self.z = tf.add(self.z_mean, tf.multiply(tf.sqrt(tf.exp(self.z_log_sigma_sq)), eps))
 
         self.reconstruction = tf.add(tf.matmul(self.z, self.weights['w2']), self.weights['b2'])

@@ -3,7 +3,22 @@ import numpy as np
 import sklearn.preprocessing as prep
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+import sys
+import os
+def find_root_path(path):
+    head, tail = os.path.split(path)
+    if "-fix" in tail or "-buggy" in tail:
+        return path
+    else:
+        return find_root_path(head)
 
+
+try:
+    sys.path.insert(0, find_root_path(os.path.abspath(__file__)))
+
+except:
+    print("Path Error! Aborted!")
+    exit(1)
 from autoencoder.autoencoder_models.VariationalAutoencoder import VariationalAutoencoder
 
 mnist = input_data.read_data_sets('MNIST_data', one_hot = True)
