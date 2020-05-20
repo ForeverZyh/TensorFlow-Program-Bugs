@@ -52,3 +52,22 @@ http://ai.stanford.edu/~amaas/data/sentiment
 Paper describing the project:
 
 Yuhao Zhang, Yifan Chen, Shing-Chi Cheung, Yingfei Xiong, Lu Zhang. An Empirical Study on TensorFlow Program Bugs. ISSTA 2018
+@inproceedings{DBLP:conf/issta/ZhangCCXZ18,
+  author    = {Yuhao Zhang and
+               Yifan Chen and
+               Shing{-}Chi Cheung and
+               Yingfei Xiong and
+               Lu Zhang},
+  title     = {An empirical study on TensorFlow program bugs},
+  booktitle = {Proceedings of the 27th {ACM} {SIGSOFT} International Symposium on
+               Software Testing and Analysis, {ISSTA} 2018, Amsterdam, The Netherlands,
+               July 16-21, 2018},
+  pages     = {129--140},
+  year      = {2018},
+  crossref  = {DBLP:conf/issta/2018},
+  url       = {https://doi.org/10.1145/3213846.3213866},
+  doi       = {10.1145/3213846.3213866},
+  timestamp = {Tue, 07 Jan 2020 08:30:57 +0100},
+  biburl    = {https://dblp.org/rec/conf/issta/ZhangCCXZ18.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
