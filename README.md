@@ -52,6 +52,7 @@ http://ai.stanford.edu/~amaas/data/sentiment
 Paper describing the project:
 
 Yuhao Zhang, Yifan Chen, Shing-Chi Cheung, Yingfei Xiong, Lu Zhang. An Empirical Study on TensorFlow Program Bugs. ISSTA 2018
+
 @inproceedings{DBLP:conf/issta/ZhangCCXZ18,
   author    = {Yuhao Zhang and
                Yifan Chen and
